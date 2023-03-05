@@ -33,8 +33,20 @@ main{
     height: 100%;
     max-width: 450px;
     padding: 24px;
-    /* display: none; */
 }
+
+.x-icon{
+    background-image: url(./tic-tac-toe/tic-tac-toe/starter-code/assets/icon-x.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.o-icon{
+    background-image: url(./tic-tac-toe/tic-tac-toe/starter-code/assets/icon-o.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 
 .choose-container{
     background-color: var(--light-blue);
@@ -67,7 +79,8 @@ main{
     opacity: 0.5;
 }
 
-.choose-x, .choose-o{
+.choose-x,
+.choose-o{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -77,6 +90,16 @@ main{
     font-size: 50px;
     line-height: 100%;
     font-weight: 900;
+}
+
+.choose-x:hover,
+.choose-o:hover{
+    background: rgba(168, 191, 201, 0.05);
+    cursor: pointer;
+}
+
+.jhover:hover{
+    background-color: var(--silver);
 }
 
 .x-o-container{
@@ -105,6 +128,8 @@ main{
     color: var(--dark-blue);
 }
 
+
+
 #cpu, #player{
     width: 100%;
     height: 56px;
@@ -122,6 +147,10 @@ main{
     line-height: 20px;
     text-transform: uppercase;
     font-family: var(--family);
+}
+
+button{
+    cursor: pointer;
 }
 
 
@@ -171,6 +200,7 @@ main{
     justify-content: center;
     align-items: center;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .main{
@@ -188,15 +218,7 @@ img.x, img.o{
     height: 40px;
 }
 
-.box-1,
-.box-2,
-.box-3,
-.box-4,
-.box-5,
-.box-6,
-.box-7,
-.box-8,
-.box-9{
+.box{
     width: 96px;
     height: 96px;
     background-color: var(--light-blue);
@@ -260,7 +282,7 @@ p.o{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* display: none; */
+    display: none;
 }
 
 .lose h1{
@@ -300,8 +322,8 @@ p.o{
     width: 100%;
 }
 
-.quit, 
-.next-round{
+#quit, 
+#next-round{
     background-color: var(--silver);
     box-shadow: 0px -4px 0px 0px #6B8997 inset;
     height: 52px;
@@ -316,7 +338,7 @@ p.o{
     font-family: var(--family);
 }
 
-.next-round{
+#next-round{
     background-color: var(--yellow);
     box-shadow: 0px -4px 0px 0px #CC8B13 inset;
 }
@@ -340,6 +362,10 @@ p.o{
     line-height: 17px;
     letter-spacing: 0.88px;
     margin-bottom: 16px;
+}
+
+.o-turn{
+    display: none;
 }
 
 .restart-confirm{
@@ -459,15 +485,7 @@ p.o{
         height: 72px;
     }
 
-    .box-1,
-    .box-2,
-    .box-3,
-    .box-4,
-    .box-5,
-    .box-6,
-    .box-7,
-    .box-8,
-    .box-9{
+    .box{
         width: 140px;
         height: 140px;
     }
