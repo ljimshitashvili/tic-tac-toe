@@ -7,137 +7,99 @@ const gameMode = document.querySelector('.game');
 const box = document.querySelectorAll('.box');
 const reset = document.querySelector('.reset');
 const resetWindow = document.querySelector('.restart-confirm');
+const background = document.querySelector('.background');
 const xTurn = document.querySelector('.x-turn');
 const oTurn = document.querySelector('.o-turn');
 const noCancel = document.querySelector('#quit');
 const yesRestart = document.querySelector('#next-round');
+const homePage = document.querySelector('#homepage');
 
-function choice(){
+let player;
+let turn = 'x';
+let freeButtons = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+let xArray = [];
+let oArray = [];
 
-    choiceX.addEventListener('click', function(){
+const drawIcons = () => {
+    for (let i = 0; i < box.length; i++) {
+        box[i].onclick = (event) => {
+            event.target.classList.remove('xHover');
+            event.target.classList.remove('oHover');
 
-        choiceX.classList.toggle('jhover');
+            const spliceIndex = freeButtons.indexOf(i);
+            freeButtons.splice(spliceIndex, 1);
 
-        if(choiceO.classList.contains('jhover')){
+            const icon = document.createElement('img');
+            icon.classList.add('icon-design');
 
-            choiceO.classList.remove('jhover');
-        }
-
-    });
-
-    choiceO.addEventListener('click', function(){
-
-        choiceO.classList.toggle('jhover');
-
-        if(choiceX.classList.contains('jhover')){
-
-            choiceX.classList.remove('jhover');
-
-        }
-
-    });
-
-}
-
-function openGameMode(){
-    restart();
-
-    vsPlayer.addEventListener('click', function(){
-
-        if(choiceX.classList.contains('jhover') || choiceO.classList.contains('jhover')){
-
-            entryMode.style.display = 'none';
-            gameMode.style.display = 'block';
-            playPlayerMode();
-
-        }else{
-
-            alert('Choose X or O')
-        
-        }
-
-    });
-
-    vsCPU.addEventListener('click', function(){
-
-        if(choiceX.classList.contains('jhover') || choiceO.classList.contains('jhover')){
-
-            entryMode.style.display = 'none';
-            gameMode.style.display = 'block';
-            playCPUMode();
-
-        }else{
-
-            alert('Choose X or O')
-        
-        }
-    });
-}
-    
-    
-
-
-function playPlayerMode(){
-    
-    if(choiceX.classList.contains('jhover') && !choiceO.classList.contains('jhover')){
-
-        var counter = 1;
-
-    }else if (!choiceX.classList.contains('jhover') && choiceO.classList.contains('jhover')){
-
-        var counter = 2;
-        
-    }
-    
-    for(let i = 0; i < box.length; i++){
-
-        box[i].addEventListener('click', (event) => {
-
-            counter++;
-            if(counter % 2 === 0){
-                    let currentBox = event.currentTarget;
-                    
-                    currentBox.classList.add('x-icon');
-                    xTurn.style.display = 'none';
-                    oTurn.style.display = 'block';
-
-            }else if(!box[i].classList.contains('x-icon')){
-                    let currentBox = event.currentTarget;
-                    
-                    currentBox.classList.add('o-icon');
-                    xTurn.style.display = 'block';
-                    oTurn.style.display = 'none';
+            if(turn === 'x'){
+                icon.src = './tic-tac-toe/tic-tac-toe/starter-code/assets/icon-x.svg';
+                event.target.append(icon);
+                turn = 'o';
+            }else{
+                icon.src = './tic-tac-toe/tic-tac-toe/starter-code/assets/icon-o.svg';
+                event.target.append(icon);
+                turn = 'x';
             }
-        });
-    }
-    
-}
 
-function playCPUMode(){
-    // This if/else conditions detects which mark is selected
-    if(choiceX.classList.contains('jhover') && !choiceO.classList.contains('jhover')){
-
-    }else if (!choiceX.classList.contains('jhover') && choiceO.classList.contains('jhover')){
-
+            makeHovers();
+            event.target.onclick = null;
+        }
+            
     }
 }
 
-function restart(){
+const makeHovers = () => {
+    for (let i = 0; i < freeButtons.length; i++) {
+        const boxIndex = freeButtons[i];
+
+        if(turn === 'x'){
+            box[boxIndex].classList.add('xHover');
+            box[boxIndex].classList.remove('oHover');
+        }else{
+            box[boxIndex].classList.remove('xHover');
+            box[boxIndex].classList.add('oHover');
+        }
+    }
+}
+
+const restartButton = () => {
     reset.addEventListener('click', () => {
-        resetWindow.style.display = 'flex';
-    });
-    
-    
-    noCancel.addEventListener('click', () => {
-        resetWindow.style.display = 'none';
-    });
-    yesRestart.addEventListener('click', () => {
-        location.reload();
+        resetWindow.style.display = "flex";
+        background.style.display = 'flex';
     });
 
+    noCancel.addEventListener('click', () => {
+        resetWindow.style.display = "none";
+        background.style.display = 'none';
+    });
 }
 
-choice();
+const openGameMode = () => {
+    vsPlayer.addEventListener('click', () => {
+        entryMode.style.display = "none";
+        gameMode.style.display = "block";
+    });
+}
+
+const chooseIcon = () => {
+    choiceX.addEventListener('click', () => {
+        choiceX.classList.add('jhover');
+        choiceO.classList.remove('jhover');
+        player = 'x';
+    });
+    choiceO.addEventListener('click', () => {
+        choiceX.classList.remove('jhover');
+        choiceO.classList.add('jhover');
+        player = 'o';
+    });
+}
+
+chooseIcon();
 openGameMode();
-
-
+restartButton();
+homePage.addEventListener('click', () => {
+    location.reload();
+});
+makeHovers();
+drawIcons();
