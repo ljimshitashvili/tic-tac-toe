@@ -16,8 +16,21 @@ const homePage = document.querySelector('#homepage');
 const winX = document.querySelector('.pl-2');
 const winO = document.querySelector('.pl-1');
 const roundTied = document.querySelector('.tied');
+const nextRound = document.querySelectorAll('.next-round');
+const quit = document.querySelectorAll('.quit');
+const scoreYellow = document.querySelector('.score-yellow');
+const scoreTie = document.querySelector('.score-tie');
+const scoreSky = document.querySelector('.score-sky');
+const yellowBox = document.querySelector('.yellow-box');
+const blueBox = document.querySelector('.blue-box');
 
-let player;
+
+
+
+let countX = 0;
+let countO = 0;
+let countTie = 0;
+let player1;
 let turn = 'x';
 let freeButtons = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 let xArray = [];
@@ -33,16 +46,119 @@ let winCombinations = [
     [2, 4, 6]
 ];
 
+// const winnerBackground = () => {
+//     winCheck()
+//     for (let i = 0; i < box.length; i++) {
+        
+        
+//     }
+// }
+
+const differPlayers = () => {
+    if(player1 === 'x'){
+        yellowBox.innerHTML = "X (P1)";
+        blueBox.innerHTML = "O (P2)";
+    }else if(player1 === 'o'){
+        blueBox.innerHTML = "O (P1)";
+        yellowBox.innerHTML = "X (P2)";
+    }else if(player1 !== 'x' && player1 !== 'o'){
+        entryMode.style.display = "flex";
+        gameMode.style.display = "none";
+    }
+}
+
+const expressTurn = () => {
+    if(turn === 'x'){
+        xTurn.style.display = "flex";
+        oTurn.style.display = "none";
+    }else{
+        oTurn.style.display = "flex";
+        xTurn.style.display = "none";
+    }
+}
+
+const resetGameView = () => {
+    turn = 'x';
+    oArray = [];
+    xArray = [];
+    freeButtons = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    drawIcons();
+    makeHovers();
+}
+
+const buttons = () =>{
+    for (let i = 0; i < quit.length; i++) {
+        quit[i].addEventListener('click', () => {
+            location.reload();
+        });
+        
+    }
+
+    for (let i = 0; i < quit.length; i++) {
+        nextRound[i].addEventListener('click', () => {
+            winX.style.display = "none";
+            winO.style.display = "none";
+            roundTied.style.display = "none";
+            scoreTie.textContent = countTie;
+            scoreSky.textContent = countO;
+            scoreYellow.innerHTML = countX;
+            background.style.display = 'none';
+            
+            for (let e = 0; e < box.length; e++) {
+                box[e].classList.remove('o-winner-active');
+                box[e].classList.remove('x-winner-active');
+            }
+        
+
+
+            turn = 'x';
+            expressTurn();
+            for (let index = 0; index < box.length; index++) {
+                if(box[index].hasChildNodes()){
+                    resetGameView();
+                    box[index].innerHTML = "";       
+                }
+            }
+        });
+    }
+}
+
 const winCheck = () => {
-    for (let i = 0; i < winCombinations.length; i++) {
+    for (let i = 0; i < winCombinations.length; i++){
         const [a, b, c] = winCombinations[i];
         if (xArray.includes(a) && xArray.includes(b) && xArray.includes(c)) {
+            box[a].classList.add('x-winner-active');
+            box[b].classList.add('x-winner-active');
+            box[c].classList.add('x-winner-active');
+
+            box[a].innerHTML = "";
+            box[b].innerHTML = "";
+            box[c].innerHTML = "";
+
+            background.style.display = "flex";
             winX.style.display = "flex";
+            buttons();
+            countX++;
         }else if(oArray.includes(a) && oArray.includes(b) && oArray.includes(c)){
+            box[a].classList.add('o-winner-active');
+            box[b].classList.add('o-winner-active');
+            box[c].classList.add('o-winner-active');
+
+            box[a].innerHTML = "";
+            box[b].innerHTML = "";
+            box[c].innerHTML = "";
+            
             winO.style.display = "flex";
-        }else if(freeButtons.length === 0){
-            roundTied.style.display = "flex";
+            background.style.display = "flex";
+            buttons();
+            countO++;
         }
+    }
+    if(freeButtons.length === 0){
+        roundTied.style.display = "flex";
+        background.style.display = "flex";
+        buttons();
+        countTie++;
     }
 }
 
@@ -65,11 +181,15 @@ const drawIcons = () => {
                 event.target.append(icon);
                 turn = 'o';
                 xArray.push(i);
+                oTurn.style.display = "flex";
+                xTurn.style.display = "none";
             }else{
                 icon.src = './tic-tac-toe/tic-tac-toe/starter-code/assets/icon-o.svg';
                 event.target.append(icon);
                 oArray.push(i);
                 turn = 'x';
+                xTurn.style.display = "flex";
+                oTurn.style.display = "none";
             }
 
             makeHovers();
@@ -105,28 +225,47 @@ const restartButton = () => {
         resetWindow.style.display = "none";
         background.style.display = 'none';
     });
+
+    yesRestart.addEventListener('click', () => {
+        for (let index = 0; index < box.length; index++) {
+            if(box[index].hasChildNodes()){
+                resetGameView();
+                box[index].innerHTML = "";
+            }
+        }
+        background.style.display = 'none';
+        resetWindow.style.display = "none";
+        scoreTie.textContent = 0;
+        scoreSky.textContent = 0;
+        scoreYellow.innerHTML = 0;
+        turn = 'x';
+        resetGameView();
+        expressTurn();
+    });
 }
 
 const openGameMode = () => {
-    vsPlayer.addEventListener('click', () => {
-        entryMode.style.display = "none";
-        gameMode.style.display = "block";
-    });
+        vsPlayer.addEventListener('click', () => {
+            entryMode.style.display = "none";
+            gameMode.style.display = "block";
+            differPlayers();
+        });
+    
+
 }
 
 const chooseIcon = () => {
     choiceX.addEventListener('click', () => {
         choiceX.classList.add('jhover');
         choiceO.classList.remove('jhover');
-        player = 'x';
+        player1 = 'x';
     });
     choiceO.addEventListener('click', () => {
         choiceX.classList.remove('jhover');
         choiceO.classList.add('jhover');
-        player = 'o';
+        player1 = 'o';
     });
 }
-
 chooseIcon();
 openGameMode();
 restartButton();
@@ -135,3 +274,4 @@ homePage.addEventListener('click', () => {
 });
 makeHovers();
 drawIcons();
+expressTurn();

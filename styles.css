@@ -291,7 +291,9 @@ img.x, img.o{
     background-color: var(--yellow);
 }
 
-.score{
+.score-yellow,
+.score-sky,
+.score-tie{
     font-weight: 700;
     font-size: 20px;
     line-height: 25px;
@@ -353,6 +355,8 @@ p.o{
     width: 100%;
 }
 
+.quit, 
+.next-round,
 #quit, 
 #next-round{
     background-color: var(--silver);
@@ -369,6 +373,23 @@ p.o{
     font-family: var(--family);
 }
 
+.o-winner-active{
+    background-color: #F2B137;
+    background-image: url(./tic-tac-toe/tic-tac-toe/starter-code/assets/blackO.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 40px 40px;
+}
+
+.x-winner-active{
+    background-color: #118C87;
+    background-image: url(./tic-tac-toe/tic-tac-toe/starter-code/assets/blackX.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 40px 40px;
+}
+
+.next-round,
 #next-round{
     background-color: var(--yellow);
     box-shadow: 0px -4px 0px 0px #CC8B13 inset;
@@ -462,6 +483,10 @@ p.o{
     margin-bottom: 24px;
 }
 
+.pl-2 h2{
+    color: var(--sky);
+}
+
 .tied{
     background-color: #1F3641;
     height: 228px;
@@ -512,6 +537,14 @@ p.o{
     .reset{
         width: 52px;
         height: 52px;
+    }
+
+    .o-winner-active{
+        background-size: 64px 64px;
+    }
+    
+    .x-winner-active{
+        background-size: 64px 64px;
     }
     
     .you,
