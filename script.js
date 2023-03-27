@@ -46,13 +46,8 @@ let winCombinations = [
     [2, 4, 6]
 ];
 
-// const winnerBackground = () => {
-//     winCheck()
-//     for (let i = 0; i < box.length; i++) {
-        
-        
-//     }
-// }
+
+
 
 const differPlayers = () => {
     if(player1 === 'x'){
@@ -91,7 +86,6 @@ const buttons = () =>{
         quit[i].addEventListener('click', () => {
             location.reload();
         });
-        
     }
 
     for (let i = 0; i < quit.length; i++) {
@@ -147,7 +141,7 @@ const winCheck = () => {
             box[a].innerHTML = "";
             box[b].innerHTML = "";
             box[c].innerHTML = "";
-            
+
             winO.style.display = "flex";
             background.style.display = "flex";
             buttons();
@@ -241,17 +235,16 @@ const restartButton = () => {
         turn = 'x';
         resetGameView();
         expressTurn();
+        
     });
 }
 
-const openGameMode = () => {
-        vsPlayer.addEventListener('click', () => {
-            entryMode.style.display = "none";
-            gameMode.style.display = "block";
-            differPlayers();
-        });
-    
-
+const openPlayerMode = () => {
+        entryMode.style.display = "none";
+        gameMode.style.display = "block";
+        differPlayers();
+        makeHovers();
+        drawIcons();
 }
 
 const chooseIcon = () => {
@@ -267,11 +260,12 @@ const chooseIcon = () => {
     });
 }
 chooseIcon();
-openGameMode();
 restartButton();
 homePage.addEventListener('click', () => {
     location.reload();
 });
-makeHovers();
-drawIcons();
-expressTurn();
+
+
+vsPlayer.addEventListener('click', openPlayerMode);
+
+vsCPU.addEventListener('click', CPU);

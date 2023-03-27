@@ -168,19 +168,7 @@ button{
     cursor: pointer;
 }
 
-.xHover:hover{
-    background-image: url(./tic-tac-toe/tic-tac-toe/starter-code/assets/icon-x-outline.svg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 64px 64px;
-}
 
-.oHover:hover{
-    background-image: url(./tic-tac-toe/tic-tac-toe/starter-code/assets/icon-o-outline.svg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 64px 64px;
-}
 
 /* ------------------ game mode ------------------ */
 .background{
@@ -509,6 +497,20 @@ p.o{
 }
 
 @media (min-width: 720px){    
+
+    .xHover:hover{
+        background-image: url(./tic-tac-toe/tic-tac-toe/starter-code/assets/icon-x-outline.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 64px 64px;
+    }
+    
+    .oHover:hover{
+        background-image: url(./tic-tac-toe/tic-tac-toe/starter-code/assets/icon-o-outline.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 64px 64px;
+    }
     
     .new-game{
         max-width: 460px;
